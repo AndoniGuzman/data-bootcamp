@@ -12,7 +12,7 @@ import psycopg2
 
 
 # Functions
-
+@task(task_id='getFileFromBucket')
 def readFileFromBucket(bucketName, fileName):
     storageClient = storage.Client()
     bucket = storageClient.bucket(bucketName)
@@ -70,7 +70,7 @@ dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a p
 installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command="pip install psycopg2-binary ; pip install google-cloud-storage",
                                       dag = dag)
 
-readFile = PythonOperator(task_id='getFileFromBucket', python_callable = readFileFromBucket, dag = dag)
+readFile = getFileFromBucket("de-bootcamp-ag","user_purchase.csv")
 
 
 installPipDependencies >> readFile 
