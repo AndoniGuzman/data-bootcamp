@@ -14,6 +14,6 @@ dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a p
 
 #hello_operator = PythonOperator(task_id='hello_task', python_callable=print_hello, dag=dag)
 installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command="pip install psycopy2-binary ; pip install google-cloud-storage",
-                                      xcom_push=True, dag = dag)
+                                      dag = dag)
 
 installPipDependencies
