@@ -4,6 +4,7 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.providers.google.cloud.transfers.gcs_to_local import *
+for airflow.hooks.postgres_hook import *
 
 
 import logging 
@@ -80,5 +81,7 @@ readFile = download_file = GCSToLocalFilesystemOperator(
         bucket="de-bootcamp-ag",
         filename="test.csv",
     )
+
+
 
 installPipDependencies >> readFile 
