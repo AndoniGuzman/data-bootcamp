@@ -8,7 +8,7 @@ from airflow.operators.bash_operator import BashOperator
 def print_hello():
     return 'Hello world from first Airflow DAG!'
 
-dag = DAG('Data upload to postgreSQL', description='Read a csv and upload it to a postgresSQL',
+dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a postgresSQL',
           schedule_interval='0 12 * * *',
           start_date=datetime(2017, 3, 20), catchup=False)
 
