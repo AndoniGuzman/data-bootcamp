@@ -3,6 +3,8 @@ from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
+from airflow.providers.google.cloud.transfers.gcs_to_local import *
+
 
 import logging 
 import os 
@@ -70,6 +72,13 @@ dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a p
 installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command="pip install psycopg2-binary ; pip install google-cloud-storage",
                                       dag = dag)
 
-readFile = PythonOperator(task_id='getFileFromBucket', python_callable=readFileFromBucket("de-bootcamp-ag","user_purchase.csv"), dag=dag) 
+#readFile = PythonOperator(task_id='getFileFromBucket', python_callable=readFileFromBucket("de-bootcamp-ag","user_purchase.csv"), dag=dag) 
+
+readFile = download_file = GCSToLocalFilesystemOperator(
+        task_id="getFileFromBucket",
+        object_name="user_purchase.csv",
+        bucket="de-bootcamp-ag",
+        filename="test.csv",
+    )
 
 installPipDependencies >> readFile 
