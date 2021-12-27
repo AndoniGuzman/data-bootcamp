@@ -85,4 +85,5 @@ readFile = download_file = GCSToLocalFilesystemOperator(
 
 uploadToDatabase = PythonOperator(task_id='uploadDataToDatabase', python_callable=uploadDataIntoDatabase, dag=dag)
 
-installPipDependencies >> readFile >> uploadToDatabase
+#installPipDependencies >> readFile >> uploadToDatabase
+uploadToDatabase
