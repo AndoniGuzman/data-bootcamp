@@ -34,7 +34,8 @@ def databaseConnection(databaseName,user,password,host,port):
     #connection.close()
     return connection
 
-def uploadDataIntoDatabase(databaseConnection):
+def uploadDataIntoDatabase():
+    databaseConnection = get_conn()
     cursor = databaseConnection.cursor()
 
     table = "user_purchase"
@@ -82,6 +83,6 @@ readFile = download_file = GCSToLocalFilesystemOperator(
         filename="test.csv",
     )
 
+uploadToDatabase = PythonOperator(task_id='uploadDataToDatabase', python_callable=uploadDataIntoDatabase, dag=dag)
 
-
-installPipDependencies >> readFile 
+installPipDependencies >> readFile >> uploadToDatabase
