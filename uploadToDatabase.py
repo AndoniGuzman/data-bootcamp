@@ -4,7 +4,7 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.providers.google.cloud.transfers.gcs_to_local import *
-from airflow.hooks.postgres_hook import *
+from airflow.hooks.postgres_hook import PostgresHook
 
 
 import logging 
@@ -35,7 +35,8 @@ def databaseConnection(databaseName,user,password,host,port):
     return connection
 
 def uploadDataIntoDatabase():
-    databaseConnection = get_conn()
+    hook = PostgresHook()
+    databaseConnection = hook.get_conn()
     cursor = databaseConnection.cursor()
 
     table = "user_purchase"
