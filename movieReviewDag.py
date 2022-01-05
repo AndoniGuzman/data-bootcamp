@@ -7,7 +7,7 @@ from airflow.providers.google.cloud.transfers.gcs_to_local import *
 from airflow.hooks.postgres_hook import PostgresHook
 
 #Dags
-dag = DAG('Movie review Logic DAG', description='Moview review logic DAG',
+dag = DAG('MovieReviewLogicDAG', description='Moview review logic DAG',
           schedule_interval='0 12 * * *',
           start_date=datetime(2017, 3, 20), catchup=False)
 
