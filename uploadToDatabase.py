@@ -72,7 +72,7 @@ dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a p
 # Tasks
 
 
-installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command="pip install psycopg2-binary ; pip install google-cloud-storage; pip install wheel; pip install 'apache-beam[gcp]'",
+installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command="pip install bs4 ;pip install psycopg2-binary ; pip install google-cloud-storage; pip install wheel; pip install 'apache-beam[gcp]'",
                                       dag = dag)
 
 #readFile = PythonOperator(task_id='getFileFromBucket', python_callable=readFileFromBucket("de-bootcamp-ag","user_purchase.csv"), dag=dag) 
