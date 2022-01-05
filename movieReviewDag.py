@@ -11,7 +11,7 @@ dag = DAG('MovieReviewLogicDAG', description='Moview review logic DAG',
           start_date=datetime(2017, 3, 20), catchup=False)
 
 # Tasks
-command = "python3 /opt/airflow/dags/repo/movieReviewLogic.py --input gs://de-bootcamp-ag-raw/movie_review.csv --output gs://de-bootcamp-ag-stagin/movie_review/output --runner DataflowRunner --project de-bootcamp-ag --region us-central1  --temp_location gs://de-bootcamp-ag-stagin/tmp/"
+command = "python /opt/airflow/dags/repo/movieReviewLogic.py --input gs://de-bootcamp-ag-raw/movie_review.csv --output gs://de-bootcamp-ag-stagin/movie_review/output --runner DataflowRunner --project de-bootcamp-ag --region us-central1  --temp_location gs://de-bootcamp-ag-stagin/tmp/"
 
 runDataflowJob = BashOperator(task_id='runMovieReviewLogic', bash_command=command,dag = dag)
 
