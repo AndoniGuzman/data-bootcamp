@@ -71,7 +71,7 @@ dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a p
 
 # Tasks
 
-command = "pip install bs4 ;pip install psycopg2-binary ; pip install google-cloud-storage; pip install wheel; pip install 'apache-beam[gcp]'; pip install apache-airflow-providers-apache-beam"
+command = "pip install bs4 ;pip install psycopg2-binary ; pip install google-cloud-storage; pip install wheel; pip install 'apache-beam[gcp]'; pip install apache-airflow-providers-apache-beam; pip install pip install apache-airflow-providers"
 installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command=command,dag = dag)
 
 #readFile = PythonOperator(task_id='getFileFromBucket', python_callable=readFileFromBucket("de-bootcamp-ag","user_purchase.csv"), dag=dag) 
@@ -85,5 +85,6 @@ readFile = download_file = GCSToLocalFilesystemOperator(
 
 uploadToDatabase = PythonOperator(task_id='uploadDataToDatabase', python_callable=uploadDataIntoDatabase, dag=dag)
 
-installPipDependencies >> readFile >> uploadToDatabase
+#installPipDependencies >> readFile >> uploadToDatabase
+installPipDependencies
 
