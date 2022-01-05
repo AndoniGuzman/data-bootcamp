@@ -23,6 +23,6 @@ command = """python3 movieReviewLogic.py
               --temp_location gs://de-bootcamp-ag-stagin/tmp/
           """
 
-runDataflowJob = BashOperator(task_id='runMovieReviewLogic', bash_command=command,dag = dag)
+runDataflowJob = BashOperator(task_id='runMovieReviewLogic', bash_command="ls -ltr",dag = dag)
 
 runDataflowJob
