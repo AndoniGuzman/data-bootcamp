@@ -24,7 +24,7 @@ dag = DAG('MovieReviewLogicDAG', description='Moview review logic DAG',
 
 
 # Tasks
-
+#Test
 movieReview = BeamRunPythonPipelineOperator(
     task_id="moviewReview",
     py_file="/opt/airflow/dags/repo/movieReviewLogic.py",
