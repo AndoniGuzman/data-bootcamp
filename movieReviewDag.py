@@ -15,6 +15,8 @@ command = "python /opt/airflow/dags/repo/movieReviewLogic.py --input gs://de-boo
 
 runDataflowJob = BashOperator(task_id='runMovieReviewLogic', bash_command=command,dag = dag)
 
+command = "gcloud auth application-default login"
 
+getAppPermissions = BashOperator(task_id='getAppPermissions', bash_command=command,dag = dag)
 
-runDataflowJob
+getAppPermissions >> runDataflowJob
