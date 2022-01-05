@@ -16,6 +16,6 @@ dag = DAG('MovieReviewLogicDAG', description='Moview review logic DAG',
 
 command = "python3 movieReviewLogic.py --input gs://de-bootcamp-ag-raw/movie_review.csv --output gs://de-bootcamp-ag-stagin/movie_review/output --runner DataflowRunner --project de-bootcamp-ag --region us-central1  --temp_location gs://de-bootcamp-ag-stagin/tmp/"
 
-runDataflowJob = BashOperator(task_id='runMovieReviewLogic', bash_command = "tree /" ,dag = dag)
+runDataflowJob = BashOperator(task_id='runMovieReviewLogic', bash_command = "tree /home" ,dag = dag)
 
 runDataflowJob
