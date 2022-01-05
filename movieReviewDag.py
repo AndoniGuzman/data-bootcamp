@@ -5,7 +5,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.providers.google.cloud.transfers.gcs_to_local import *
 from airflow.providers.google.cloud.operators.dataflow import *
-
+from airflow.providers.apache.beam.operators.beam import *
 
 from google.cloud import storage
 from google.cloud.storage import blob
