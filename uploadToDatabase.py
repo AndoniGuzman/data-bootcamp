@@ -78,7 +78,7 @@ installPipDependencies = BashOperator(task_id='installPipDependencies', bash_com
 
 
 #readFile = PythonOperator(task_id='getFileFromBucket', python_callable=readFileFromBucket("de-bootcamp-ag","user_purchase.csv"), dag=dag) 
-
+'''
 readFile = download_file = GCSToLocalFilesystemOperator(
         task_id="getFileFromBucket",
         object_name="user_purchase.csv",
@@ -87,7 +87,7 @@ readFile = download_file = GCSToLocalFilesystemOperator(
     )
 
 uploadToDatabase = PythonOperator(task_id='uploadDataToDatabase', python_callable=uploadDataIntoDatabase, dag=dag)
-
+'''
 #installPipDependencies >> readFile >> uploadToDatabase
 installPipDependencies
 
