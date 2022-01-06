@@ -3,7 +3,7 @@ from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
-from airflow.providers.apache.beam.operators.beam import *
+#from airflow.providers.apache.beam.operators.beam import *
 #from airflow.providers.apache.beam.hooks.beam import *
 
 from google.cloud import storage
@@ -24,7 +24,7 @@ dag = DAG('MovieReviewLogicDAG', description='Moview review logic DAG',
 
 # Tasks
 #Test
-'''
+
 movieReview = BeamRunPythonPipelineOperator(
     task_id="moviewReview",
     py_file="/opt/airflow/dags/repo/movieReviewLogic.py",
@@ -38,5 +38,5 @@ movieReview = BeamRunPythonPipelineOperator(
     dataflow_config={'location': 'us-central1',
                      'project_id': 'de-bootcamp-ag'}
 )
-'''
-#movieReview 
+
+movieReview 
