@@ -73,7 +73,7 @@ dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a p
 
 command = "pip install bs4 ;pip install psycopg2-binary ; pip install google-cloud-storage; pip install wheel; pip3 install 'apache-beam[gcp]'; pip3 install apache-airflow-providers-apache-beam;  pip3 install apache-airflow-providers;pip3 install apache-airflow-providers-apache-beam[google] --use-deprecated=legacy-resolver"
 #command = "pip install apache-airflow-providers-apache-beam[google] --use-deprecated=legacy-resolver"
-command = "pip show apache-airflow-providers-apache-beam[google]"
+command = "pip show apache-airflow-providers-apache-beam"
 installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command=command,dag = dag)
 
 
