@@ -77,8 +77,8 @@ dag = DAG('DataUploadToPostgreSQL', description='Read a csv and upload it to a p
 command = "pip install bs4 ;pip install psycopg2-binary ; pip install google-cloud-storage; pip install wheel; pip3 install 'apache-beam[gcp]'; pip3 install apache-airflow-providers-apache-beam;  pip3 install apache-airflow-providers;pip3 install apache-airflow-providers-apache-beam[google] --use-deprecated=legacy-resolver"
 #command = "pip install apache-airflow-providers-apache-beam[google] --use-deprecated=legacy-resolver"
 command = "cp /home/airflow/.local/lib/python3.7/site-packages/* /usr/local/lib/python3.7/dist-packages/"
-command = "sudo su; pip install apache-airflow-providers-apache-beam --target /usr/local/lib/python3.7/dist-packages/ --no-user"
-installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command=command,dag = dag)
+command = "pip install apache-airflow-providers-apache-beam --target /usr/local/lib/python3.7/dist-packages/"
+installPipDependencies = BashOperator(task_id='installPipDependencies', bash_command=command,dag = dag, run_as_user="root")
 
 
 #readFile = PythonOperator(task_id='getFileFromBucket', python_callable=readFileFromBucket("de-bootcamp-ag","user_purchase.csv"), dag=dag) 
