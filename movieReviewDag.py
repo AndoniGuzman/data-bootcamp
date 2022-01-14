@@ -2,6 +2,9 @@ from datetime import datetime
 import sys
 sys.path.append('/usr/local/lib/python3.7/site-packages/pip/')
 sys.path.append('/usr/local/lib/python3.7/site-packages/')
+sys.path.append('/home/airflow/.local/lib/python3.7/site-packages')
+
+
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
