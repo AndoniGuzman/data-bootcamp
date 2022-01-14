@@ -6,7 +6,10 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.providers.google.cloud.transfers.gcs_to_local import *
 from airflow.hooks.postgres_hook import PostgresHook
 
-
+import sys
+from pprint import pprint
+pprint(sys.path)
+ 
 import logging 
 import os 
 from google.cloud import storage
