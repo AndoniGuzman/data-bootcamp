@@ -1,8 +1,9 @@
 from datetime import datetime
 import sys
+sys.path.insert(0,os.path.abspath(os.path.dirname(__file__)))
 sys.path.append('/usr/local/lib/python3.7/site-packages/pip/')
 sys.path.append('/usr/local/lib/python3.7/site-packages/')
-sys.path.insert(0,'/home/airflow/.local/lib/python3.7/')
+sys.path.append('/home/airflow/.local/lib/python3.7/')
 
 
 from airflow import DAG
