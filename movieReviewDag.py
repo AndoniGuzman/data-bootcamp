@@ -2,7 +2,7 @@ from datetime import datetime
 import sys
 sys.path.append('/usr/local/lib/python3.7/site-packages/pip/')
 sys.path.append('/usr/local/lib/python3.7/site-packages/')
-sys.path.append(0,'/home/airflow/.local/lib/python3.7/')
+sys.path.insert(0,'/home/airflow/.local/lib/python3.7/')
 
 
 from airflow import DAG
