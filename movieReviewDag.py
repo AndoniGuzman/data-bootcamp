@@ -2,7 +2,7 @@ from datetime import datetime
 import sys
 sys.path.append('/usr/local/lib/python3.7/site-packages/pip/')
 sys.path.append('/usr/local/lib/python3.7/site-packages/')
-sys.path.append('/home/airflow/.local/lib/python3.7/site-packages')
+sys.path.append(0,'/home/airflow/.local/lib/python3.7/')
 
 
 from airflow import DAG
@@ -10,6 +10,7 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 #from airflow.providers.apache.beam.operators.beam import *
+
 from airflow.providers.apache.beam.operators.beam import BeamRunPythonPipelineOperator
 #from airflow.providers.apache.beam.hooks.beam import *
 
