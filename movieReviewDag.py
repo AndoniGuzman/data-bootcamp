@@ -1,5 +1,6 @@
 from datetime import datetime
 import sys
+import os
 sys.path.insert(0,os.path.abspath(os.path.dirname(__file__)))
 sys.path.append('/usr/local/lib/python3.7/site-packages/pip/')
 sys.path.append('/usr/local/lib/python3.7/site-packages/')
