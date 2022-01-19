@@ -10,6 +10,7 @@ sys.path.append('/home/airflow/.local/lib/python3.7/')
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python_operator import PythonVirtualenvOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.decorators import task
 #from airflow.providers.apache.beam.operators.beam import *
@@ -78,6 +79,7 @@ def callable_virtualenv():
     dataflow_config={'location': 'us-central1',
                  'project_id': 'de-bootcamp-ag'}
         
+    return movieReview
 )
 
 virtualenv_task = callable_virtualenv()
