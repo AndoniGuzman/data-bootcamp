@@ -54,6 +54,11 @@ movieReview = BeamRunPythonPipelineOperator(
 
 movieReview 
 '''
+
+dag = DAG('MovieReviewLogicDAG', description='Moview review logic DAG',
+          schedule_interval='0 12 * * *',
+          start_date=datetime(2017, 3, 20), catchup=False)
+
 @task.virtualenv(
         task_id="virtualenv_python", requirements=["apache-airflow-providers-apache-beam==3.1.0"], system_site_packages=False
     )
