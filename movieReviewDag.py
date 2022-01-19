@@ -87,6 +87,7 @@ test = PythonVirtualenvOperator(
         python_callable=callable_virtualenv,
         system_site_packages=False,
         requirements=["apache-airflow-providers-apache-beam==3.1.0", "apache-airflow"],
-        task_id="test")
+        task_id="test",
+        dag = dag)
 
 test
