@@ -78,8 +78,8 @@ def callable_virtualenv():
     py_system_site_packages=False,
     dataflow_config={'location': 'us-central1',
                  'project_id': 'de-bootcamp-ag'}
-        
+    )        
     return movieReview
-)
+
 
 virtualenv_task = callable_virtualenv()
