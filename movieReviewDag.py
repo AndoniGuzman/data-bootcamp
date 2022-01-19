@@ -67,7 +67,7 @@ def callable_virtualenv():
     library before it is installed.
     """
     from airflow.providers.apache.beam.operators.beam import BeamRunPythonPipelineOperator
-    from airflow import *
+    from airflow import utils
     movieReview = BeamRunPythonPipelineOperator(
     task_id="moviewReview",
     py_file="/opt/airflow/dags/repo/movieReviewLogic.py",
