@@ -22,9 +22,8 @@ dag = DAG('ExportPostgresTable', description='Export a table from postgres ',
 
 def exportTable(tableName):
     filename = tableName + ".csv"
-    with open(filename) as file:
-        hook = PostgresHook()
-        hook.bulk_dump(tableName, file)
+    hook = PostgresHook()
+    hook.bulk_dump(tableName, file)
         
 # Tasks
 
