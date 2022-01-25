@@ -20,14 +20,13 @@ dag = DAG('ExportPostgresTable', description='Export a table from postgres ',
 
 # Functions
 
-def exportTable(tableName):
-    filename = tableName + ".csv"
+def exportTable():
     hook = PostgresHook()
     hook.bulk_dump(tableName, filename)
         
 # Tasks
 
-exportTable = PythonOperator(task_id='exportTableToFile', python_callable=exportTable(tableName), dag=dag)
+exportTable = PythonOperator(task_id='exportTableToFile', python_callable=exportTable, dag=dag)
 
 upload_file = LocalFilesystemToGCSOperator(
         task_id="upload_table_to_staging",
