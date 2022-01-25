@@ -35,7 +35,7 @@ exportTable = PythonOperator(task_id='exportTableToFile', python_callable=export
 
 upload_file = LocalFilesystemToGCSOperator(
         task_id="upload_table_to_staging",
-        src=filename
+        src=filename,
         dst="/",
         bucket=bucket,
     )
