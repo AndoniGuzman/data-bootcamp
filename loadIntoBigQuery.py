@@ -133,7 +133,7 @@ loadLogReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
     task_id='loadLogReview',
     bucket='de-bootcamp-ag-staging',
     source_objects=['results/log_review_output-00000-of-00001'],
-    destination_project_dataset_table='de_bootcamp_ag_dataset.tempUserPurchase',
+    destination_project_dataset_table='de_bootcamp_ag_dataset.tempLogReview',
     schema_fields=[
         {'name': 'id', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
         {'name': 'date', 'type': 'DATE', 'mode': 'NULLABLE'},
