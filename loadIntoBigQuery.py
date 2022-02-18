@@ -113,7 +113,7 @@ loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
         {'name': 'Country', 'type': 'STRING', 'mode': 'NULLABLE'}
     ],
     write_disposition='WRITE_TRUNCATE',
-    skip_leading_rows = 1
+    skip_leading_rows = 1,
     dag=dag)
 
 
