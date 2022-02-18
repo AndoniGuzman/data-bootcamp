@@ -113,8 +113,40 @@ loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
         {'name': 'Country', 'type': 'STRING', 'mode': 'NULLABLE'}
     ],
     write_disposition='WRITE_TRUNCATE',
-    skip_leading_rows = 1,
+    skip_leading_rows = 1
+    dag=dag)
+
+loadMovieReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadMoviewReview',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['results/movie_review-00000-of-00001'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.tempMoviewReview',
+    schema_fields=[
+        {'name': 'cid', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'review', 'type': 'NUMERIC', 'mode': 'NULLABLE'}
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1
+    dag=dag)
+
+loadLogReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadLogReview',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['results/log_review-00000-of-00001'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.tempUserPurchase',
+    schema_fields=[
+        {'name': 'id', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'date', 'type': 'DATE', 'mode': 'NULLABLE'},
+        {'name': 'device', 'type': 'STRING', 'mode': 'NULLABLE'},
+        {'name': 'location', 'type': 'STRING', 'mode': 'NULLABLE'},
+        {'name': 'os', 'type': 'STRING', 'mode': 'NULLABLE'},
+        {'name': 'ip', 'type': 'STRING', 'mode': 'NULLABLE'},
+        {'name': 'telephone', 'type': 'STRING', 'mode': 'NULLABLE'},
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1
     dag=dag)
 
 
-loadUserPurchaseIntoBigquery
+
+loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
