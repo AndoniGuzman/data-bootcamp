@@ -98,7 +98,7 @@ readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
 
 
 loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
-    task_id='testLoad',
+    task_id='loadUserPurchase',
     bucket='de-bootcamp-ag-staging',
     source_objects=['de-bootcamp-ag-staging/results/user_purchase.csv'],
     destination_project_dataset_table='de_bootcamp_ag_dataset.tempUserPurchase',
