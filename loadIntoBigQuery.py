@@ -114,7 +114,6 @@ loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
     ],
     create_disposition='CREATE_IF_NEEDED',
     write_disposition='WRITE_TRUNCATE',
-    bigquery_conn_id="google_cloud_default"
     dag=dag)
 
 
