@@ -107,7 +107,7 @@ loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
         {'name': 'StockCode', 'type': 'STRING', 'mode': 'NULLABLE'},
         {'name': 'Description', 'type': 'STRING', 'mode': 'NULLABLE'},
         {'name': 'Quantity', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
-        {'name': 'InvoiceDate', 'type': 'DATE', 'mode': 'NULLABLE'},
+        {'name': 'InvoiceDate', 'type': 'STRING', 'mode': 'NULLABLE'},
         {'name': 'UnitPrice', 'type': 'DECIMAL', 'mode': 'NULLABLE'},
         {'name': 'CustomerId', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
         {'name': 'Country', 'type': 'STRING', 'mode': 'NULLABLE'}
