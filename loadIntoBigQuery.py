@@ -103,7 +103,7 @@ loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
     source_objects=['user_purchase.csv'],
     destination_project_dataset_table='de_bootcamp_ag_dataset.tempUserPurchase',
     schema_fields=[
-        {'name': 'InvoiceNo', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'InvoiceNo', 'type': 'STRING', 'mode': 'NULLABLE'},
         {'name': 'StockCode', 'type': 'STRING', 'mode': 'NULLABLE'},
         {'name': 'Description', 'type': 'STRING', 'mode': 'NULLABLE'},
         {'name': 'Quantity', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
