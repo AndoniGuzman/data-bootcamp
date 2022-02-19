@@ -89,9 +89,9 @@ def preprocessLogReview():
 
 # Tasks
 
-preprocessUserPurchaseTask = PythonOperator(task_id='preprocess user purchase', python_callable=preprocessUserPurchase, dag=dag)
-preprocessMovieReviewTask = PythonOperator(task_id='preprocess moview review', python_callable=preprocessMovieReview, dag=dag)
-preprocessLogReviewTask = PythonOperator(task_id='preprocess log review', python_callable=preprocessLogReview, dag=dag)
+preprocessUserPurchaseTask = PythonOperator(task_id='preprocess_user_purchase', python_callable=preprocessUserPurchase, dag=dag)
+preprocessMovieReviewTask = PythonOperator(task_id='preprocess_moview_review', python_callable=preprocessMovieReview, dag=dag)
+preprocessLogReviewTask = PythonOperator(task_id='preprocess_log_review', python_callable=preprocessLogReview, dag=dag)
 
 readUserPurchaseFile  = GCSToLocalFilesystemOperator(
         task_id="getUserPurchaseFromBucket",
