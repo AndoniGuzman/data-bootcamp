@@ -75,6 +75,7 @@ def preprocessMovieReview():
                 review.append(row["review"]) # Change for a proper header
 
 def preprocessLogReview():
+    global id
     with open("logResults.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
@@ -91,16 +92,17 @@ def preprocessLogReview():
                 telephone.append(row["telephone"])
                 browser.append("") # Workaround for the moment 
 
+def createDimensionTables():
     with open('dim_browser.csv', 'w', encoding='UTF8') as f:
         header = ['id_dim_browser', 'browser']
         writer = csv.writer(f)
         writer.writerow(header)
         for i in id:
             data = [i,""] #Onlypri in browser
-            writer.writerow(data)    
-
-def createDimensionTables():
-    pass
+            print (data)
+            writer.writerow(data)
+            if i == 10:
+                break    
         
 # Tasks
 
