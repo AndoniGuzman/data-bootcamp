@@ -69,7 +69,7 @@ def preprocessMovieReview():
             if line_count == 0:
                 line_count += 1 #Skip header
             cid.append(row["cid"])
-            review.append(row["0"]) # Change for a proper header
+            review.append(row["review"]) # Change for a proper header
 
 def preprocessLogReview():
     with open("LogResults.csv", mode='r') as csv_file:
