@@ -7,6 +7,7 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 from airflow.providers.google.cloud.transfers.gcs_to_local import *
+from airflow.providers.google.cloud.transfers.local_to_gcs import *
 from airflow.hooks.postgres_hook import PostgresHook
 from airflow.contrib.operators.gcs_to_bq import *
 from google.cloud import storage
