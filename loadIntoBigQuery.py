@@ -202,5 +202,5 @@ uploadDimensionBrowserTable = LocalFilesystemToGCSOperator(
         dag=dag
     )
 #loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-#readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask
+readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask
 createDimensionTablesTask >> uploadDimensionBrowserTable >> loadDimensionBrowserTable
