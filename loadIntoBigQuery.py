@@ -30,7 +30,7 @@ cid = []
 review = []
 
 #Log Review  id,date,device,location,os,ip,telephone
-id = []
+idLog = []
 date = []
 device = []
 location = []
@@ -75,7 +75,6 @@ def preprocessMovieReview():
                 review.append(row["review"]) # Change for a proper header
 
 def preprocessLogReview():
-    global id
     with open("logResults.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
@@ -83,7 +82,7 @@ def preprocessLogReview():
             if line_count == 0:
                 line_count += 1 #Skip header
             else:
-                id.append(row["id"])
+                idLog.append(row["id"])
                 date.append(row["date"])
                 device.append(row["device"])
                 location.append(row["location"])
@@ -97,12 +96,10 @@ def createDimensionTables():
         header = ['id_dim_browser', 'browser']
         writer = csv.writer(f)
         writer.writerow(header)
-        for i in id:
+        for i in idLog:
             data = [i,""] #Onlypri in browser
             print (data)
             writer.writerow(data)
-            if i == 10:
-                break    
         
 # Tasks
 
