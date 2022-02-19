@@ -98,6 +98,7 @@ readUserPurchaseFile  = GCSToLocalFilesystemOperator(
         object_name="user_purchase.csv",
         bucket="de-bootcamp-ag-staging",
         filename="user_purchase.csv",
+        dag=dag
     )
 
 readMoviewReviewFile  = download_file = GCSToLocalFilesystemOperator(
@@ -105,6 +106,7 @@ readMoviewReviewFile  = download_file = GCSToLocalFilesystemOperator(
         object_name="results/movie_review-00000-of-00001",
         bucket="de-bootcamp-ag-staging",
         filename="movieResults.csv",
+        dag=dag
     )
 
 readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
@@ -112,6 +114,7 @@ readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
         object_name="results/log_review-00000-of-00001",
         bucket="de-bootcamp-ag-staging",
         filename="LogResults.csv",
+        dag=dag
     )
 
 #Operators 
