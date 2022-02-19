@@ -82,7 +82,6 @@ def preprocessLogReview():
             if line_count == 0:
                 line_count += 1 #Skip header
             else:
-                print(row["id"])
                 id.append(row["id"])
                 date.append(row["date"])
                 device.append(row["device"])
@@ -92,14 +91,16 @@ def preprocessLogReview():
                 telephone.append(row["telephone"])
                 browser.append("") # Workaround for the moment 
 
+        with open('dim_browser.csv', 'w', encoding='UTF8') as f:
+            header = ['id_dim_browser', 'browser']
+            writer = csv.writer(f)
+            writer.writerow(header)
+            for i in id:
+                data = [i,""] #Onlypri in browser
+                writer.writerow(data)    
+
 def createDimensionTables():
-    with open('dim_browser.csv', 'w', encoding='UTF8') as f:
-        header = ['id_dim_browser', 'browser']
-        writer = csv.writer(f)
-        writer.writerow(header)
-        for i in id:
-            data = [i,""] #Only in browser
-            writer.writerow(data)    
+    pass
         
 # Tasks
 
