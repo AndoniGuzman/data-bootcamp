@@ -47,6 +47,7 @@ dag = DAG('LoadIntoBigQuery', description='Upload CSV from google storage to big
 # Functions
 # Headers InvoiceNo	StockCode	Description	Quantity	InvoiceDate	UnitPrice	CustomerID	Country
 def createDimensionTables():
+    element = 0
     with open("user_purchase.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
@@ -97,7 +98,59 @@ def createDimensionTables():
             data = [i,""] #Onlypri in browser
             print (data)
             writer.writerow(data)
-        
+            element += 1
+
+    with open('dim_os.csv', 'w', encoding='UTF8') as f:
+        header = ['id_dim_os', 'os']
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in idLog:        
+            data = [i,os[element]] #Onlypri in browser
+            writer.writerow(data)
+            element += 1
+    element = 0
+
+    with open('dim_location.csv', 'w', encoding='UTF8') as f:
+        header = ['id_dim_location', 'location']
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in idLog:            
+            data = [i,location[element]] #Onlypri in browser
+            writer.writerow(data)
+            element += 1
+    element = 0
+
+    with open('dim_devices.csv', 'w', encoding='UTF8') as f:
+        header = ['id_dim_devices', 'device']
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in idLog:
+            data = [i,device[element]] #Onlypri in browser
+            writer.writerow(data)
+            element += 1
+    element = 0
+
+    with open('dim_date.csv', 'w', encoding='UTF8') as f:
+        header = ['id_dim_date', 'log_date','day','month','year','season']
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in idLog:
+            splitDate = date[element].split("-")
+            data = [i,date[element],splitDate[0],splitDate[1],splitDate[2],""] #Onlypri in browser
+            writer.writerow(data)
+            element += 1
+    element = 0
+    '''
+    with open('dim_fact_movie_analytics.csv', 'w', encoding='UTF8') as f:
+        header = ['customerId','id_dim_devices','id_dim_location','id_dim_os','id_dim_browser','amount_spent','review_score','review_count','insert_date']
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in customerId:
+            data = [i,device[element]] #Onlypri in browser
+            writer.writerow(data)
+            element += 1
+    element = 0
+    '''
 # Tasks
 
 createDimensionTablesTask = PythonOperator(task_id='create_dimension_tables', python_callable=createDimensionTables, dag=dag)
