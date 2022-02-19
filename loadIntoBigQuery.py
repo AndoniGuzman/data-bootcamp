@@ -243,6 +243,61 @@ loadDimensionBrowserTable  = GoogleCloudStorageToBigQueryOperator(
     skip_leading_rows = 1,
     dag=dag)
 
+loadDimensionOsTable  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadDimensionOsTable',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['dimensionTables/dim_os.csv'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.dim_os',
+    schema_fields=[
+        {'name': 'id_dim_os', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'os', 'type': 'STRING', 'mode': 'NULLABLE'}
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1,
+    dag=dag)
+
+loadDimensionLocationTable  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadDimensionLocationTable',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['dimensionTables/dim_location.csv'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.dim_location',
+    schema_fields=[
+        {'name': 'id_dim_location', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'location', 'type': 'STRING', 'mode': 'NULLABLE'}
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1,
+    dag=dag)
+
+loadDimensionDeviceTable  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadDimensionDeviceTable',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['dimensionTables/dim_device.csv'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.dim_device',
+    schema_fields=[
+        {'name': 'id_dim_device', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'device', 'type': 'STRING', 'mode': 'NULLABLE'}
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1,
+    dag=dag)
+
+loadDimensionDateTable  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadDimensionDateTable',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['dimensionTables/dim_date.csv'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.dim_date',
+    schema_fields=[
+        {'name': 'id_dim_date', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'log_date', 'type': 'DATE', 'mode': 'NULLABLE'},
+        {'name': 'day', 'type': 'STRING', 'mode': 'NULLABLE'},
+        {'name': 'month', 'type': 'STRING', 'mode': 'NULLABLE'},
+        {'name': 'year', 'type': 'STRING', 'mode': 'NULLABLE'},
+        {'name': 'season', 'type': 'DATE', 'mode': 'NULLABLE'}
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1,
+    dag=dag)
 
 uploadDimensionBrowserTable = LocalFilesystemToGCSOperator(
         task_id="uploadDimensionBrowserTable",
@@ -251,5 +306,35 @@ uploadDimensionBrowserTable = LocalFilesystemToGCSOperator(
         bucket="de-bootcamp-ag-staging",
         dag=dag
     )
+uploadDimensionOsTable = LocalFilesystemToGCSOperator(
+        task_id="uploadDimensionOsTable",
+        src="dim_os.csv",
+        dst="dimensionTables/",
+        bucket="de-bootcamp-ag-staging",
+        dag=dag
+    )
+uploadDimensionLocationTable = LocalFilesystemToGCSOperator(
+        task_id="uploadDimensionLocationTable",
+        src="dim_location.csv",
+        dst="dimensionTables/",
+        bucket="de-bootcamp-ag-staging",
+        dag=dag
+    )
+uploadDimensionDeviceTable = LocalFilesystemToGCSOperator(
+        task_id="uploadDimensionDeviceTable",
+        src="dim_device.csv",
+        dst="dimensionTables/",
+        bucket="de-bootcamp-ag-staging",
+        dag=dag
+    )
+uploadDimensionDateTable = LocalFilesystemToGCSOperator(
+        task_id="uploadDimensionDateTable",
+        src="dim_date.csv",
+        dst="dimensionTables/",
+        bucket="de-bootcamp-ag-staging",
+        dag=dag
+    )
+
+
 #loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >>  createDimensionTablesTask >> uploadDimensionBrowserTable >> loadDimensionBrowserTable
+readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >>  createDimensionTablesTask >> uploadDimensionBrowserTable >> uploadDimensionOsTable >> uploadDimensionLocationTable >> uploadDimensionDeviceTable >> uploadDimensionDateTable >> loadDimensionBrowserTable >> loadDimensionOsTable >> loadDimensionLocationTable >> loadDimensionDeviceTable >> loadDimensionDateTable
