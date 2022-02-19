@@ -46,7 +46,7 @@ dag = DAG('LoadIntoBigQuery', description='Upload CSV from google storage to big
 
 # Functions
 # Headers InvoiceNo	StockCode	Description	Quantity	InvoiceDate	UnitPrice	CustomerID	Country
-def preprocessUserPurchase():
+def createDimensionTables():
     with open("user_purchase.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
@@ -63,7 +63,6 @@ def preprocessUserPurchase():
                 customerId.append(row["CustomerID"])
                 country.append(row["Country"])
 
-def preprocessMovieReview():
     with open("movieResults.csv", mode='r') as csv_file:
         movieReview = csv.DictReader(csv_file)
         line_count = 0
@@ -74,7 +73,6 @@ def preprocessMovieReview():
                 cid.append(row["cid"])
                 review.append(row["review"]) # Change for a proper header
 
-def preprocessLogReview():
     with open("logResults.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
@@ -91,7 +89,6 @@ def preprocessLogReview():
                 telephone.append(row["telephone"])
                 browser.append("") # Workaround for the moment 
 
-def createDimensionTables():
     with open('dim_browser.csv', 'w', encoding='UTF8') as f:
         header = ['id_dim_browser', 'browser']
         writer = csv.writer(f)
@@ -103,9 +100,6 @@ def createDimensionTables():
         
 # Tasks
 
-preprocessUserPurchaseTask = PythonOperator(task_id='preprocess_user_purchase', python_callable=preprocessUserPurchase, dag=dag)
-preprocessMovieReviewTask = PythonOperator(task_id='preprocess_moview_review', python_callable=preprocessMovieReview, dag=dag)
-preprocessLogReviewTask = PythonOperator(task_id='preprocess_log_review', python_callable=preprocessLogReview, dag=dag)
 createDimensionTablesTask = PythonOperator(task_id='create_dimension_tables', python_callable=createDimensionTables, dag=dag)
 
 readUserPurchaseFile  = GCSToLocalFilesystemOperator(
@@ -206,4 +200,4 @@ uploadDimensionBrowserTable = LocalFilesystemToGCSOperator(
         dag=dag
     )
 #loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask >> createDimensionTablesTask >> uploadDimensionBrowserTable >> loadDimensionBrowserTable
+readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >>  createDimensionTablesTask >> uploadDimensionBrowserTable >> loadDimensionBrowserTable
