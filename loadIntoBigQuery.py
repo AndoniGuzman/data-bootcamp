@@ -82,6 +82,7 @@ def preprocessLogReview():
             if line_count == 0:
                 line_count += 1 #Skip header
             else:
+                print(row["id"])
                 id.append(row["id"])
                 date.append(row["date"])
                 device.append(row["device"])
