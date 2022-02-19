@@ -87,11 +87,21 @@ def preprocessLogReview():
             telephone.append(row["telephone"])
             browser.append("") # Workaround for the moment 
 
+def createDimensionTables():
+    with open('dim_browser.csv', 'w', encoding='UTF8') as f:
+        header = ['id_dim_browser', 'browser']
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in id:
+            data = [i,""] #Only in browser
+            writer.writerow(data)    
+        
 # Tasks
 
 preprocessUserPurchaseTask = PythonOperator(task_id='preprocess_user_purchase', python_callable=preprocessUserPurchase, dag=dag)
 preprocessMovieReviewTask = PythonOperator(task_id='preprocess_moview_review', python_callable=preprocessMovieReview, dag=dag)
 preprocessLogReviewTask = PythonOperator(task_id='preprocess_log_review', python_callable=preprocessLogReview, dag=dag)
+createDimensionTablesTask = PythonOperator(task_id='create_dimension_tables', python_callable=createDimensionTables, dag=dag)
 
 readUserPurchaseFile  = GCSToLocalFilesystemOperator(
         task_id="getUserPurchaseFromBucket",
@@ -169,7 +179,27 @@ loadLogReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
     skip_leading_rows = 1,
     dag=dag)
 
+loadDimensionBrowserTable  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadDimensionBrowserTable',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['dimensionTables/dim_browser.csv'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.dim_browser',
+    schema_fields=[
+        {'name': 'id_dim_browser', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'browser', 'type': 'STRING', 'mode': 'NULLABLE'}
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1,
+    dag=dag)
 
 
+uploadDimensionBrowserTable = LocalFilesystemToGCSOperator(
+        task_id="uploadDimensionBrowserTable",
+        src="dim_browser.csv",
+        dst="/dimensionTables/",
+        bucket="de-bootcamp-ag-staging",
+        dag=dag
+    )
 #loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask
+#readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask
+createDimensionTablesTask >> uploadDimensionBrowserTable >> loadDimensionBrowserTable
