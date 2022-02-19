@@ -111,7 +111,7 @@ readMoviewReviewFile  = download_file = GCSToLocalFilesystemOperator(
 
 readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
         task_id="getLogReviewFromBucket",
-        object_name="results/log_review-00000-of-00001",
+        object_name="results/log_review_output-00000-of-00001",
         bucket="de-bootcamp-ag-staging",
         filename="LogResults.csv",
         dag=dag
