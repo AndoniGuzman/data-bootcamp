@@ -73,20 +73,21 @@ def preprocessMovieReview():
             review.append(row["review"]) # Change for a proper header
 
 def preprocessLogReview():
-    with open("LogResults.csv", mode='r') as csv_file:
+    with open("logResults.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
         for row in userPurchase:
             if line_count == 0:
                 line_count += 1 #Skip header
-            id.append(row["id"])
-            date.append(row["date"])
-            device.append(row["device"])
-            location.append(row["location"])
-            os.append(row["os"])
-            ip.append(row["ip"])
-            telephone.append(row["telephone"])
-            browser.append("") # Workaround for the moment 
+            else:
+                id.append(row["id"])
+                date.append(row["date"])
+                device.append(row["device"])
+                location.append(row["location"])
+                os.append(row["os"])
+                ip.append(row["ip"])
+                telephone.append(row["telephone"])
+                browser.append("") # Workaround for the moment 
 
 def createDimensionTables():
     with open('dim_browser.csv', 'w', encoding='UTF8') as f:
@@ -124,7 +125,7 @@ readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
         task_id="getLogReviewFromBucket",
         object_name="results/log_review_output-00000-of-00001",
         bucket="de-bootcamp-ag-staging",
-        filename="LogResults.csv",
+        filename="logResults.csv",
         dag=dag
     )
 
