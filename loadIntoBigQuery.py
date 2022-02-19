@@ -145,7 +145,7 @@ loadMovieReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
         {'name': 'review', 'type': 'NUMERIC', 'mode': 'NULLABLE'}
     ],
     write_disposition='WRITE_TRUNCATE',
-    skip_leading_rows = 1
+    skip_leading_rows = 1,
     dag=dag)
 
 loadLogReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
