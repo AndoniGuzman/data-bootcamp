@@ -197,10 +197,9 @@ loadDimensionBrowserTable  = GoogleCloudStorageToBigQueryOperator(
 uploadDimensionBrowserTable = LocalFilesystemToGCSOperator(
         task_id="uploadDimensionBrowserTable",
         src="dim_browser.csv",
-        dst="/dimensionTables/",
+        dst="dimensionTables/",
         bucket="de-bootcamp-ag-staging",
         dag=dag
     )
 #loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask
-createDimensionTablesTask >> uploadDimensionBrowserTable >> loadDimensionBrowserTable
+readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask >> createDimensionTablesTask >> uploadDimensionBrowserTable >> loadDimensionBrowserTable
