@@ -28,7 +28,15 @@ country = []
 cid = []
 review = []
 
-#Log Review 
+#Log Review  id,date,device,location,os,ip,telephone
+id = []
+date = []
+device = []
+location = []
+os = []
+ip = []
+telephone = []
+browser = []
 #DAG
 
 dag = DAG('LoadIntoBigQuery', description='Upload CSV from google storage to bigquery',
@@ -37,8 +45,8 @@ dag = DAG('LoadIntoBigQuery', description='Upload CSV from google storage to big
 
 # Functions
 # Headers InvoiceNo	StockCode	Description	Quantity	InvoiceDate	UnitPrice	CustomerID	Country
-def preprocessUserPurchaseCSV(fileName):
-    with open(filename, mode='r') as csv_file:
+def preprocessUserPurchase():
+    with open("user_purchase.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
         for row in userPurchase:
@@ -53,8 +61,8 @@ def preprocessUserPurchaseCSV(fileName):
             customerId.append(row["CustomerID"])
             country.append(row["Country"])
 
-def preprocessMovieReview(filename):
-    with open(filename, mode='r') as csv_file:
+def preprocessMovieReview():
+    with open("movieResults.csv", mode='r') as csv_file:
         movieReview = csv.DictReader(csv_file)
         line_count = 0
         for row in movieReview:
@@ -63,16 +71,27 @@ def preprocessMovieReview(filename):
             cid.append(row["cid"])
             review.append(row["0"]) # Change for a proper header
 
-def preprocessMovieReview(filename):
-    with open(filename, mode='r') as csv_file:
-        movieReview = csv.DictReader(csv_file)
+def preprocessLogReview():
+    with open("LogResults.csv", mode='r') as csv_file:
+        userPurchase = csv.DictReader(csv_file)
         line_count = 0
-        for row in movieReview:
+        for row in userPurchase:
             if line_count == 0:
                 line_count += 1 #Skip header
-            cid.append(row["cid"])
-            review.append(row["0"]) # Change for a proper header
+            id.append(row["id"])
+            date.append(row["date"])
+            device.append(row["device"])
+            location.append(row["location"])
+            os.append(row["os"])
+            ip.append(row["ip"])
+            telephone.append(row["telephone"])
+            browser.append("") # Workaround for the moment 
+
 # Tasks
+
+preprocessUserPurchaseTask = PythonOperator(task_id='preprocess user purchase', python_callable=preprocessUserPurchase, dag=dag)
+preprocessMovieReviewTask = PythonOperator(task_id='preprocess moview review', python_callable=preprocessMovieReview, dag=dag)
+preprocessLogReviewTask = PythonOperator(task_id='preprocess log review', python_callable=preprocessLogReview, dag=dag)
 
 readUserPurchaseFile  = GCSToLocalFilesystemOperator(
         task_id="getUserPurchaseFromBucket",
@@ -95,7 +114,7 @@ readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
         filename="LogResults.csv",
     )
 
-
+#Operators 
 
 loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
     task_id='loadUserPurchase',
@@ -126,7 +145,7 @@ loadMovieReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
         {'name': 'review', 'type': 'NUMERIC', 'mode': 'NULLABLE'}
     ],
     write_disposition='WRITE_TRUNCATE',
-    skip_leading_rows = 1,
+    skip_leading_rows = 1
     dag=dag)
 
 loadLogReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
@@ -149,4 +168,5 @@ loadLogReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
 
 
 
-loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
+#loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
+readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >> preprocessUserPurchaseTask >> preprocessMovieReviewTask >> preprocessLogReviewTask
