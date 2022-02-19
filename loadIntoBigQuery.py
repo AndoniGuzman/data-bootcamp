@@ -91,13 +91,13 @@ def preprocessLogReview():
                 telephone.append(row["telephone"])
                 browser.append("") # Workaround for the moment 
 
-        with open('dim_browser.csv', 'w', encoding='UTF8') as f:
-            header = ['id_dim_browser', 'browser']
-            writer = csv.writer(f)
-            writer.writerow(header)
-            for i in id:
-                data = [i,""] #Onlypri in browser
-                writer.writerow(data)    
+    with open('dim_browser.csv', 'w', encoding='UTF8') as f:
+        header = ['id_dim_browser', 'browser']
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in id:
+            data = [i,""] #Onlypri in browser
+            writer.writerow(data)    
 
 def createDimensionTables():
     pass
