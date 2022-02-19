@@ -53,14 +53,15 @@ def preprocessUserPurchase():
         for row in userPurchase:
             if line_count == 0:
                 line_count += 1 #Skip header
-            invoiceNo.append(row["InvoiceNo"])
-            stockCode.append(row["StockCode"])
-            description.append(row["Description"])
-            quantity.append(row["Quantity"])
-            invoiceDate.append(row["InvoiceDate"])
-            unitPrice.append(row["UnitPrice"])
-            customerId.append(row["CustomerID"])
-            country.append(row["Country"])
+            else:
+                invoiceNo.append(row["InvoiceNo"])
+                stockCode.append(row["StockCode"])
+                description.append(row["Description"])
+                quantity.append(row["Quantity"])
+                invoiceDate.append(row["InvoiceDate"])
+                unitPrice.append(row["UnitPrice"])
+                customerId.append(row["CustomerID"])
+                country.append(row["Country"])
 
 def preprocessMovieReview():
     with open("movieResults.csv", mode='r') as csv_file:
@@ -69,8 +70,9 @@ def preprocessMovieReview():
         for row in movieReview:
             if line_count == 0:
                 line_count += 1 #Skip header
-            cid.append(row["cid"])
-            review.append(row["review"]) # Change for a proper header
+            else:
+                cid.append(row["cid"])
+                review.append(row["review"]) # Change for a proper header
 
 def preprocessLogReview():
     with open("logResults.csv", mode='r') as csv_file:
