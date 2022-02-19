@@ -96,10 +96,9 @@ def createDimensionTables():
         writer.writerow(header)
         for i in idLog:
             data = [i,""] #Onlypri in browser
-            print (data)
             writer.writerow(data)
             element += 1
-
+    element = 0
     with open('dim_os.csv', 'w', encoding='UTF8') as f:
         header = ['id_dim_os', 'os']
         writer = csv.writer(f)
