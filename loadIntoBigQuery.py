@@ -53,7 +53,7 @@ def preprocessUserPurchase():
             if line_count == 0:
                 line_count += 1 #Skip header
             invoiceNo.append(row["InvoiceNo"])
-            stockCode.append(row["stockCode"])
+            stockCode.append(row["StockCode"])
             description.append(row["Description"])
             quantity.append(row["Quantity"])
             invoiceDate.append(row["InvoiceDate"])
