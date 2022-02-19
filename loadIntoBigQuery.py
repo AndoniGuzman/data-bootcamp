@@ -336,6 +336,4 @@ uploadDimensionDateTable = LocalFilesystemToGCSOperator(
     )
 
 
-#loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-#readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >>  createDimensionTablesTask >> uploadDimensionBrowserTable >> uploadDimensionOsTable >> uploadDimensionLocationTable >> uploadDimensionDeviceTable >> uploadDimensionDateTable >> loadDimensionBrowserTable >> loadDimensionOsTable >> loadDimensionLocationTable >> loadDimensionDeviceTable >> loadDimensionDateTable
 uploadDimensionDeviceTable
