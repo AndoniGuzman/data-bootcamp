@@ -336,4 +336,4 @@ uploadDimensionDateTable = LocalFilesystemToGCSOperator(
     )
 
 
-uploadDimensionDeviceTable
+uploadDimensionDeviceTable >> loadDimensionDeviceTable
