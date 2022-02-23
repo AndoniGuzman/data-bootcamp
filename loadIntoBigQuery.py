@@ -73,7 +73,8 @@ def createDimensionTables():
             else:
                 cid.append(row["cid"])
                 review.append(row["review"]) # Change for a proper header
-
+   
+    print (len(review))
     with open("logResults.csv", mode='r') as csv_file:
         userPurchase = csv.DictReader(csv_file)
         line_count = 0
