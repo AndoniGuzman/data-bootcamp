@@ -150,7 +150,7 @@ def createDimensionTables():
             idLocation = element
             idOs = element 
             idBrowser = element
-            amountSpent = float(quantity[element]) * float(unitPrice[element])
+            amountSpent = round(float(quantity[element]) * float(unitPrice[element]),10)
             reviewScore = review[element]
             reviewCount = 1
             insertDate = date[element]
