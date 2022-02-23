@@ -95,7 +95,7 @@ def createDimensionTables():
         writer = csv.writer(f)
         writer.writerow(header)
         for i in idLog:
-            data = [i,""] #Onlypri in browser
+            data = [i,""] 
             writer.writerow(data)
             element += 1
     element = 0
@@ -104,7 +104,7 @@ def createDimensionTables():
         writer = csv.writer(f)
         writer.writerow(header)
         for i in idLog:        
-            data = [i,os[element]] #Onlypri in browser
+            data = [i,os[element]] 
             writer.writerow(data)
             element += 1
     element = 0
@@ -114,7 +114,7 @@ def createDimensionTables():
         writer = csv.writer(f)
         writer.writerow(header)
         for i in idLog:            
-            data = [i,location[element]] #Onlypri in browser
+            data = [i,location[element]]
             writer.writerow(data)
             element += 1
     element = 0
@@ -124,7 +124,7 @@ def createDimensionTables():
         writer = csv.writer(f)
         writer.writerow(header)
         for i in idLog:
-            data = [i,device[element]] #Onlypri in browser
+            data = [i,device[element]] 
             writer.writerow(data)
             element += 1
     element = 0
@@ -135,21 +135,28 @@ def createDimensionTables():
         writer.writerow(header)
         for i in idLog:
             splitDate = date[element].split("-")
-            data = [i,date[element],splitDate[0],splitDate[1],splitDate[2],""] #Onlypri in browser
-            writer.writerow(data)
+            data = [i,date[element],splitDate[0],splitDate[1],splitDate[2],""] 
             element += 1
     element = 0
-    '''
+    
     with open('dim_fact_movie_analytics.csv', 'w', encoding='UTF8') as f:
         header = ['customerId','id_dim_devices','id_dim_location','id_dim_os','id_dim_browser','amount_spent','review_score','review_count','insert_date']
         writer = csv.writer(f)
         writer.writerow(header)
         for i in customerId:
-            data = [i,device[element]] #Onlypri in browser
+            idDevice = element
+            idLocation = element
+            idOs = element 
+            idBrowser = element
+            amountSpent = quantity[element] * unitPrice[element]
+            reviewScore = review[element]
+            reviewCount = 1
+            insertDate = date[element]
+            data = [i,idDevice,idLocation,idOs,idBrowser,amountSpent,reviewScore,reviewCount,insertDate]
             writer.writerow(data)
             element += 1
     element = 0
-    '''
+    
 # Tasks
 
 createDimensionTablesTask = PythonOperator(task_id='create_dimension_tables', python_callable=createDimensionTables, dag=dag)
@@ -177,6 +184,8 @@ readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
         filename="logResults.csv",
         dag=dag
     )
+
+
 
 #Operators 
 
@@ -299,6 +308,27 @@ loadDimensionDateTable  = GoogleCloudStorageToBigQueryOperator(
     skip_leading_rows = 1,
     dag=dag)
 
+loadFactTable  = GoogleCloudStorageToBigQueryOperator(
+    task_id='loadFactTable',
+    bucket='de-bootcamp-ag-staging',
+    source_objects=['dimensionTables/dim_fact_movie_analytics.csv'],
+    destination_project_dataset_table='de_bootcamp_ag_dataset.dim_fact_movie_analytics',
+    schema_fields=[
+        {'name': 'customerId', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'id_dim_devices', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'id_dim_location', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'id_dim_os', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'id_dim_browser', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'amount_spent', 'type': 'DECIMAL', 'mode': 'NULLABLE'},
+        {'name': 'review_score', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'review_count', 'type': 'NUMERIC', 'mode': 'NULLABLE'},
+        {'name': 'insert_date', 'type': 'DATE', 'mode': 'NULLABLE'}
+    ],
+    write_disposition='WRITE_TRUNCATE',
+    skip_leading_rows = 1,
+    dag=dag)
+    
+
 uploadDimensionBrowserTable = LocalFilesystemToGCSOperator(
         task_id="uploadDimensionBrowserTable",
         src="dim_browser.csv",
@@ -334,7 +364,13 @@ uploadDimensionDateTable = LocalFilesystemToGCSOperator(
         bucket="de-bootcamp-ag-staging",
         dag=dag
     )
-
+uploadFactTable = LocalFilesystemToGCSOperator(
+        task_id="uploadFactTable",
+        src="dim_fact_movie_analytics.csv",
+        dst="dimensionTables/",
+        bucket="de-bootcamp-ag-staging",
+        dag=dag
+    )
 
 #loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >>  createDimensionTablesTask >> uploadDimensionBrowserTable >> uploadDimensionOsTable >> uploadDimensionLocationTable >> uploadDimensionDeviceTable >> uploadDimensionDateTable >> loadDimensionBrowserTable >> loadDimensionOsTable >> loadDimensionLocationTable >> loadDimensionDeviceTable >> loadDimensionDateTable
+readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >>  createDimensionTablesTask >> uploadDimensionBrowserTable >> uploadDimensionOsTable >> uploadDimensionLocationTable >> uploadDimensionDeviceTable >> uploadDimensionDateTable >> loadDimensionBrowserTable >> loadDimensionOsTable >> loadDimensionLocationTable >> loadDimensionDeviceTable >> loadDimensionDateTable >> uploadFactTable >> loadFactTable
