@@ -87,7 +87,7 @@ def createDimensionTables():
                 os.append(row["os"])
                 ip.append(row["ip"])
                 telephone.append(row["telephone"])
-                browser.append("") # Workaround for the moment 
+                browser.append("firefox") # Workaround for the moment 
 
     with open('dim_browser.csv', 'w', encoding='UTF8') as f:
         header = ['id_dim_browser', 'browser']
@@ -134,7 +134,7 @@ def createDimensionTables():
         writer.writerow(header)
         for i in idLog:
             splitDate = date[element].split("-")
-            data = [i,date[element],splitDate[0],splitDate[1],splitDate[2],""] 
+            data = [i,date[element],splitDate[0],splitDate[1],splitDate[2],"winter"] 
             element += 1
     element = 0
     
