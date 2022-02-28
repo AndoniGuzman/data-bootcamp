@@ -10,9 +10,8 @@ from airflow.providers.google.cloud.transfers.gcs_to_local import *
 from airflow.providers.google.cloud.transfers.local_to_gcs import *
 from airflow.hooks.postgres_hook import PostgresHook
 from airflow.contrib.operators.gcs_to_bq import *
-from google.cloud import storage
-from google.cloud.storage import blob
-import psycopg2
+from airflow.models.baseoperator import chain
+
 import csv
 
 #User Purchase
@@ -95,7 +94,7 @@ def createDimensionTables():
         writer = csv.writer(f)
         writer.writerow(header)
         for i in idLog:
-            data = [i,""] 
+            data = [i,"firefox"] 
             writer.writerow(data)
             element += 1
     element = 0
@@ -375,4 +374,9 @@ uploadFactTable = LocalFilesystemToGCSOperator(
     )
 
 #loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
-readUserPurchaseFile >> readMoviewReviewFile >> readLogReviewFile >>  createDimensionTablesTask >> uploadDimensionBrowserTable >> uploadDimensionOsTable >> uploadDimensionLocationTable >> uploadDimensionDeviceTable >> uploadDimensionDateTable >> loadDimensionBrowserTable >> loadDimensionOsTable >> loadDimensionLocationTable >> loadDimensionDeviceTable >> loadDimensionDateTable >> uploadFactTable >> loadFactTable
+
+
+chain([readUserPurchaseFile,readMoviewReviewFile,readLogReviewFile],createDimensionTablesTask,
+       [uploadDimensionBrowserTable,uploadDimensionOsTable,uploadDimensionLocationTable,uploadDimensionDeviceTable,uploadDimensionDateTable],
+       [loadDimensionBrowserTable,loadDimensionOsTable,loadDimensionLocationTable,loadDimensionDeviceTable,loadDimensionDateTable],
+       uploadFactTable,loadFactTable)
