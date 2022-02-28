@@ -189,7 +189,7 @@ readLogReviewFile  = download_file = GCSToLocalFilesystemOperator(
 
 
 #Operators 
-
+'''
 loadUserPurchaseIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
     task_id='loadUserPurchase',
     bucket='de-bootcamp-ag-staging',
@@ -239,7 +239,7 @@ loadLogReviewIntoBigquery  = GoogleCloudStorageToBigQueryOperator(
     write_disposition='WRITE_TRUNCATE',
     skip_leading_rows = 1,
     dag=dag)
-
+'''
 loadDimensionBrowserTable  = GoogleCloudStorageToBigQueryOperator(
     task_id='loadDimensionBrowserTable',
     bucket='de-bootcamp-ag-staging',
