@@ -375,7 +375,7 @@ uploadFactTable = LocalFilesystemToGCSOperator(
 
 
 
-chain([readUserPurchaseFile,readMoviewReviewFile,readLogReviewFile],createDimensionTablesTask
+chain([readUserPurchaseFile,readMoviewReviewFile,readLogReviewFile],createDimensionTablesTask,
        [uploadDimensionBrowserTable,uploadDimensionOsTable,uploadDimensionLocationTable,uploadDimensionDeviceTable,uploadDimensionDateTable],
        [loadDimensionBrowserTable,loadDimensionOsTable,loadDimensionLocationTable,loadDimensionDeviceTable,loadDimensionDateTable],
        uploadFactTable,loadFactTable)
