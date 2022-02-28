@@ -373,10 +373,9 @@ uploadFactTable = LocalFilesystemToGCSOperator(
         dag=dag
     )
 
-#loadUserPurchaseIntoBigquery >> loadMovieReviewIntoBigquery >> loadLogReviewIntoBigquery
 
 
-chain([readUserPurchaseFile,readMoviewReviewFile,readLogReviewFile],createDimensionTablesTask)
-       #[uploadDimensionBrowserTable,uploadDimensionOsTable,uploadDimensionLocationTable,uploadDimensionDeviceTable,uploadDimensionDateTable],
-       #[loadDimensionBrowserTable,loadDimensionOsTable,loadDimensionLocationTable,loadDimensionDeviceTable,loadDimensionDateTable],
-       #uploadFactTable,loadFactTable)
+chain([readUserPurchaseFile,readMoviewReviewFile,readLogReviewFile],createDimensionTablesTask
+       [uploadDimensionBrowserTable,uploadDimensionOsTable,uploadDimensionLocationTable,uploadDimensionDeviceTable,uploadDimensionDateTable],
+       [loadDimensionBrowserTable,loadDimensionOsTable,loadDimensionLocationTable,loadDimensionDeviceTable,loadDimensionDateTable],
+       uploadFactTable,loadFactTable)
